@@ -1,0 +1,474 @@
+
+  
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banglore Home Price Prediction</title>
+      
+ <style>
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+.switch-field {
+	display: flex;
+	margin-bottom: 36px;
+	overflow: hidden;
+}
+
+.switch-field input {
+	position: absolute !important;
+	clip: rect(0, 0, 0, 0);
+	height: 1px;
+	width: 1px;
+	border: 0;
+	overflow: hidden;
+}
+
+.switch-field label {
+	background-color: #e4e4e4;
+	color: rgba(0, 0, 0, 0.6);
+	font-size: 14px;
+	line-height: 1;
+	text-align: center;
+	padding: 8px 16px;
+	margin-right: -1px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+	transition: all 0.1s ease-in-out;
+}
+
+.switch-field label:hover {
+	cursor: pointer;
+}
+
+.switch-field input:checked + label {
+	background-color: #a5dc86;
+	box-shadow: none;
+}
+
+.switch-field label:first-of-type {
+	border-radius: 4px 0 0 4px;
+}
+
+.switch-field label:last-of-type {
+	border-radius: 0 4px 4px 0;
+}
+
+.form {
+	max-width: 270px;
+	font-family: "Lucida Grande", Tahoma, Verdana, sans-serif;
+	font-weight: normal;
+	line-height: 1.625;
+	margin: 8px auto;
+	padding-left: 16px;
+	z-index: 2;
+}
+
+h2 {
+	font-size: 18px;
+	margin-bottom: 8px;
+}
+.area{
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 76%;
+  border: 0;
+  margin: 0 0 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 15px;
+  height: 35px;
+  border-radius: 5px;
+}
+
+.location{
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 76%;
+  border: 0;
+  margin: 0 0 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 15px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.submit{
+  background: #a5dc86;
+  width: 76%;
+  border: 0;
+  margin: 25px 0 10px;
+  box-sizing: border-box;
+  font-size: 15px;
+	height: 35px;
+	text-align: center;
+	border-radius: 5px;
+}
+
+.result{
+		background: #dcd686;
+		width: 76%;
+		border: 0;
+		margin: 25px 0 10px;
+		box-sizing: border-box;
+		font-size: 15px;
+		height: 35px;
+		text-align: center;
+}
+
+.img {
+  background: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+	background-repeat: no-repeat;
+  background-size: auto;
+  background-size:100% 100%;
+  -webkit-filter: 5px;
+  -moz-filter: 5px;
+  -o-filter: 5px;
+  -ms-filter: 5px;
+  filter: 15px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+h2 {
+	font-size: 18px;
+	margin-bottom: 8px;
+}
+
+    
+h1 {
+  
+  font-family: verdana;
+  font-size: 200%;
+   text-align: center;
+    font-style: italic;
+}
+  
+
+body, html {
+  height: 100%;
+}
+button {
+  background-color: #008CBA;
+  border: none;
+  color: white;
+  padding: 14px 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-sizing: border-box;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  }
+
+select {
+box-sizing: border-box;
+		font-size: 14px;
+		height: 30px;
+		text-align: center;
+}
+footer{
+     text-align: right;
+  } 
+</style>
+</head>
+<body >
+<div class="img"></div>
+
+  <h1><u>House Price Predictor</u></h1>
+<form action="{{ url_for('predict') }}" method="POST" class="form">      
+
+	  <h2>Location</h2>
+          <select id="location" name="location" >
+          <option value=0>1st Block Jayanagar</option>
+          <option value=1>1st Phase JP Nagar</option>
+	  <option value=2>2nd Phase Judicial Layout</option>
+          <option value=3>2nd Stage Nagarbhavi</option>
+	  <option value=4>5th Block Hbr Layout</option>
+          <option value=5>5th Phase JP Nagar</option>
+	  <option value=6>6th Phase JP Nagar</option>
+          <option value=7>7th Phase JP Nagar</option>
+	  <option value=8>8th Phase JP Nagar</option>
+          <option value=9>9th Phase JP Nagar</option>
+	  <option value=10>AECS Layout</option>
+          <option value=11>Abbigere</option>
+	  <option value=12>Akshaya Nagar</option>
+          <option value=13>Ambalipura</option>
+	  <option value=14>Ambedkar Nagar</option>
+          <option value=15>Amruthahalli</option>
+	  <option value=16>Anandapura</option>
+          <option value=17>Ananth Nagar</option>
+	  <option value=18>Anekal</option>
+          <option value=19>Anjanapura</option>
+	  <option value=20>Ardendale</option>
+          <option value=21>Arekere</option>
+	  <option value=22>Attibele</option>
+          <option value=23>BEML Layout</option>  
+          <option value=24>BTM 2nd Stage</option>
+          <option value=25>BTM Layout</option>
+	  <option value=26>Babusapalaya</option>
+          <option value=27>Badavala Nagar</option>
+	  <option value=28>Balagere</option>
+          <option value=29>Banashankari</option>
+	  <option value=30>Banashankari Stage II</option>
+          <option value=31>Banashankari Stage III</option>
+	  <option value=32>Banashankari Stage V</option>
+          <option value=33>Banashankari Stage VI</option>
+	  <option value=34>Banaswadi</option>
+          <option value=35>Banjara Layout</option>
+	  <option value=36>Bannerghatta</option>
+          <option value=37>Bannerghatta Road</option>
+	  <option value=38>Basavangudi</option>
+          <option value=39>Basaveshwara Nagar</option>
+	  <option value=40>Battarahalli</option>
+          <option value=41>Begur</option>
+	  <option value=42>Begur Road</option>
+          <option value=43>Bellandur</option>
+	  <option value=44>Benson Town</option>
+          <option value=45>Bharathi Nagar</option>
+	  <option value=46>Bhoganhalli</option>
+          <option value=47>Billekahalli</option>
+	  <option value=48>Binny Pete</option>
+	  <option value=49>Bisuvanahalli</option>
+          <option value=50>Bommanahalli</option>
+	  <option value=51>Bommasandra</option>
+	  <option value=52>Bommasandra Industrial Area</option>
+          <option value=53>Bommenahalli</option>
+	  <option value=54>Brookefield</option>
+          <option value=55>Budigere</option>
+	  <option value=56>CV Raman Nagar</option>
+          <option value=57>Chamrajpet</option>
+	  <option value=58>Chandapura</option>
+          <option value=59>Channasandra</option>
+	  <option value=60>Chikka Tirupathi</option>
+          <option value=61>Chikkabanavar</option>
+	  <option value=62>Chikkalasandra</option>
+          <option value=63>Choodasandra</option> 
+          <option value=64>Cooke Town</option>
+          <option value=65>Cox Town</option>
+	  <option value=66>Cunningham Road</option>
+          <option value=67>Dasanapura</option>
+	  <option value=68>Dasarahalli</option>
+          <option value=69>Devanahalli</option>
+	  <option value=70>Devarachikkanahalli</option>
+          <option value=71>Dodda Nekkundi</option>
+	  <option value=72>Doddaballapur</option>
+          <option value=73>Doddakallasandra</option>
+	  <option value=74>Doddathoguru</option>
+          <option value=75>Domlur</option>
+	  <option value=76>Dommasandra</option>
+          <option value=77>EPIP Zone</option>
+	  <option value=78>Electronic City</option>
+          <option value=79>Electronic City Phase II</option>
+	  <option value=80>Electronics City Phase 1</option>
+          <option value=81>Frazer Town</option>
+	  <option value=82>GM Palaya</option>
+          <option value=83>Garudachar Palya</option>
+	  <option value=84>Giri Nagar</option>
+          <option value=85>Gollarapalya Hosahalli</option>
+	  <option value=86>Gottigere</option>
+          <option value=87>Green Glen Layout</option>
+	  <option value=88>Gubbalala</option>
+	  <option value=89>Gunjur</option>
+          <option value=90>HAL 2nd Stage</option>
+	  <option value=91>HBR Layout</option>
+	  <option value=92>HRBR Layout</option>
+          <option value=93>HSR Layout</option>
+	  <option value=94>Haralur Road</option>
+          <option value=95>Harlur</option>
+	  <option value=96>Hebbal</option>
+          <option value=97>Hebbal Kempapura</option>
+	  <option value=98>Hegde Nagar</option>
+          <option value=99>Hennur</option>
+	  <option value=100>Hennur Roa</option>
+          <option value=101>Hoodi</option>
+	  <option value=102>Horamavu Agara</option>
+          <option value=103>Horamavu Banaswadi</option>  
+          <option value=104>Hormavu</option>
+          <option value=105>Hosakerehalli</option>
+	  <option value=106>Hoskote</option>
+          <option value=107>Hosur Road</option>
+	  <option value=108>Hulimavu</option>
+          <option value=109>ISRO Layout</option>
+	  <option value=110>ITPL</option>
+          <option value=111>Iblur Village</option>
+	  <option value=112>Indira Nagar</option>
+          <option value=113>JP Nagar</option>
+	  <option value=114>Jakkur</option>
+          <option value=115>Jalahalli</option>
+	  <option value=116>Jalahalli East</option>
+          <option value=117>Jigani</option>
+	  <option value=118>Judicial Layout</option>
+          <option value=119>KR Puram</option>
+	  <option value=120>Kadubeesanahalli</option>
+          <option value=121>Kadugodi</option>
+	  <option value=122>Kaggadasapura</option>
+          <option value=123>Kaggalipura</option>
+	  <option value=124>Kaikondrahalli</option>
+          <option value=125>Kalena Agrahara</option>
+	  <option value=126>Kalyan nagar</option>
+          <option value=127>Kambipura</option>
+	  <option value=128>Kammanahalli</option>
+	  <option value=129>Kammasandra</option>
+          <option value=130>Kanakapura</option>
+	  <option value=131>Kanakpura Road</option>
+	  <option value=132>Kannamangala</option>
+          <option value=133>Karuna Nagar</option>
+	  <option value=134>Kasavanhalli</option>
+          <option value=135>Kasturi Nagar</option>
+	  <option value=136>Kathriguppe</option>
+          <option value=137>Kaval Byrasandra</option>
+	  <option value=138>Kenchenahalli</option>
+          <option value=139>Kengeri</option>
+	  <option value=140>Kengeri Satellite Town</option>
+          <option value=141>Kereguddadahalli</option>
+	  <option value=142>Kodichikkanahalli</option>
+          <option value=143>Kodigehaali</option>
+          <option value=144>Kodigehalli</option>
+          <option value=145>Kodihalli</option>
+	  <option value=146>Kogilu</option>
+          <option value=147>Konanakunte</option>
+	  <option value=148>Koramangala</option>
+          <option value=149>Kothannur</option>
+	  <option value=150>Kothanur</option>
+          <option value=151>Kudlu</option>
+	  <option value=152>Kudlu Gate</option>
+          <option value=153>Kumaraswami Layout</option>
+	  <option value=154>Kundalahalli</option>
+          <option value=155>LB Shastri Nagar</option>
+	  <option value=156>Laggere</option>
+          <option value=157>Lakshminarayana Pura</option>
+	  <option value=158>Lingadheeranahalli</option>
+          <option value=159>Magadi Road</option>
+	  <option value=160>Mahadevpura</option>
+          <option value=161>Mahalakshmi Layout</option>
+	  <option value=162>Mallasandra</option>
+          <option value=163>Malleshpalya</option>
+	  <option value=164>Malleshwaram</option>
+          <option value=165>Marathahalli</option>
+	  <option value=166>Margondanahalli</option>
+          <option value=167>Marsur</option>
+	  <option value=168>Mico Layout</option>
+	  <option value=169>Munnekollal</option>
+          <option value=170>Murugeshpalya</option>
+          <option value=171>Mysore Road</option>
+	  <option value=172>NGR Layout</option>
+          <option value=173>NRI Layout</option>
+	  <option value=174>Nagarbhavi</option>
+          <option value=175>Nagasandra</option>
+	  <option value=176>Nagavara</option>
+          <option value=177>Nagavarapalya</option>
+	  <option value=178>Narayanapura</option>
+	  <option value=179>Neeladri Nagar</option>
+	  <option value=180>Nehru Nagar</option>
+	  <option value=181>OMBR Layout</option>
+	  <option value=182>Old Airport Road</option>
+          <option value=183>Old Madras Road</option>
+	  <option value=184>Padmanabhanagar</option>
+          <option value=185>Pai Layout</option>
+	  <option value=186>Panathur</option>
+          <option value=187>Parappana Agrahara</option>
+	  <option value=188>Pattandur Agrahara</option>
+	  <option value=189>Poorna Pragna Layout</option>
+          <option value=190>Prithvi Layout</option>
+	  <option value=191>R.T. Nagar</option>
+	  <option value=192>Rachenahalli</option>
+          <option value=193>Raja Rajeshwari Nagar</option>
+	  <option value=194>Rajaji Nagar</option>
+          <option value=195>Rajiv Nagar</option>
+	  <option value=196>Ramagondanahalli</option>
+          <option value=197>Ramamurthy Nagar</option>
+	  <option value=198>Rayasandra</option>
+          <option value=199>Sahakara Nagar</option>
+	  <option value=200>Sanjay nagar</option>
+          <option value=201>Sarakki Nagar</option>
+	  <option value=202>Sarjapur</option>
+          <option value=203>Sarjapur  Road</option>
+          <option value=204>Sarjapura - Attibele Road</option>
+          <option value=205>Sector 2 HSR Layout</option>
+	  <option value=206>Sector 7 HSR Layout</option>
+          <option value=207>Seegehalli</option>
+	  <option value=208>Shampura</option>
+          <option value=209>Shamil</option>
+	  <option value=210>Shivaji Nagar</option>
+          <option value=211>Singasandra</option>
+	  <option value=212>Somasundara Palya</option>
+          <option value=213>Sompura</option>
+	  <option value=214>Sonnenahalli</option>
+          <option value=215>Sonnenahalli</option>
+	  <option value=216>Sultan Palaya</option>
+          <option value=217>TC Palaya</option>
+	  <option value=218>Talaghattapura</option>
+          <option value=219>Thanisandra</option>
+	  <option value=220>Thigalarapalya</option>
+          <option value=221>Thubarahalli</option>
+	  <option value=222>Thyagaraja Nagar</option>
+          <option value=223>Tindlu</option>
+	  <option value=224>Tumkur Road</option>
+          <option value=225>Ulsoor</option>
+	  <option value=226>Uttarahalli</option>
+          <option value=227>Varthur</option>
+	  <option value=228>Varthur Road</option>
+	  <option value=229>Vasanthapura</option>
+          <option value=230>Vidyaranyapura</option>
+          <option value=231>Vijayanagar</option>
+	  <option value=232>Vishveshwarya Layout</option>
+          <option value=233>Vishwapriya Layout</option>
+	  <option value=234>Vittasandra</option>
+          <option value=235>Whitefield</option>
+	  <option value=236>Yelachenahalli</option>
+          <option value=237>Yelahanka</option>
+	  <option value=238>Yelahanka New Town</option>
+	  <option value=239>Yelenahalli</option>
+          <option value=240>Yeshwanthpur</option>
+          <option value=241>Other</option>
+	  </select>
+	
+	<h2>Area (Square Feet)</h2>
+    <input class="area"  id="uiSqft" class="floatLabel" name="Squareft" >
+	<h2>Bath</h2>
+	<div class="switch-field">
+		<input type="radio" id="radio-bhk-1" name="Bathrooms" value=1>
+		<label for="radio-bhk-1">1</label>
+		<input type="radio" id="radio-bhk-2" name="Bathrooms" value=2>
+		<label for="radio-bhk-2">2</label>
+		<input type="radio" id="radio-bhk-3" name="Bathrooms" value=3>
+		<label for="radio-bhk-3">3</label>
+		<input type="radio" id="radio-bhk-4" name="Bathrooms" value=4>
+		<label for="radio-bhk-4">4</label>
+		<input type="radio" id="radio-bhk-5" name="Bathrooms" value=5>
+		<label for="radio-bhk-5">5</label>
+	</div>
+
+
+	<h2>BHK</h2>
+	<div class="switch-field">
+		<input type="radio" id="radio-bath-1" name="Bhk" value=1>
+		<label for="radio-bath-1">1</label>
+		<input type="radio" id="radio-bath-2" name="Bhk" value=2>
+		<label for="radio-bath-2">2</label>
+		<input type="radio" id="radio-bath-3" name="Bhk" value=3>
+		<label for="radio-bath-3">3</label>
+		<input type="radio" id="radio-bath-4" name="Bhk" value=4>
+		<label for="radio-bath-4">4</label>
+		<input type="radio" id="radio-bath-5" name="Bhk" value=5>
+		<label for="radio-bath-5">5</label>
+	</div>
+		
+	
+</div>
+	
+	<button type="submit" class="btn btn-primary" id="predict">ESTIMATE PRICE</button>
+
+	
+</form>
+    
+	<br><h1> {{ prediction_texts }} </h1></br>
+	
+	<footer> Made By Shubham Patil</footer>
+</body>
+</html>
